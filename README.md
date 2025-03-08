@@ -1,6 +1,11 @@
 INTERNET AUTHORING ASSIGNMENT #2
 
 
+DB_HOST=
+DB_USERNAME=
+DB_PASSWORD=
+DB_DATABASE=
+DB_PORT=
 
 <!-- server {
   listen        80;

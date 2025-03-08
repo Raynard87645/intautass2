@@ -1,5 +1,1 @@
-<?php 
-    include("layout/app.php");
-
-
-?>
+<?php include("layout/app.php"); ?>

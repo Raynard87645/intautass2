@@ -12,12 +12,14 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/views/home.php">Home</a>
             </li>
+            <?php if($_SESSION['name']){ ?>
             <li class="nav-item">
               <a class="nav-link" href="/views/welcome.php">Welcome</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/views/products.php">Products</a>
             </li>
+            <?php } ?>
             <li class="nav-item">
               <a class="nav-link" href="/views/contact.php">Contact</a>
             </li>
@@ -26,7 +28,7 @@
         <?php if($_SESSION['name']){ ?>
           <div class="navbar-text">
               Hello, <?php echo htmlspecialchars($_SESSION['name']); ?>!
-              <a href="/logout.php" class="btn btn-outline-light ms-3">Logout</a>
+              <a href="/includes/logout.php" class="btn btn-outline-light ms-3">Logout</a>
           </div>
         <?php } else { ?>
           <div class="navbar-text">

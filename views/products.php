@@ -7,46 +7,67 @@ include "../layout/app.php";
 
 requireLogin();
 
-$search = $_GET['search'] ?? '';
-$category = $_GET['category'] ?? '';
+$search = strtolower($_GET['search']) ?? '';
+$category = strtolower($_GET['category']) ?? '';
 
-$query = "SELECT * FROM products WHERE 1=1";
-$params = [];
+$products = getProducts($search, $category);
+$categories = getCategories();
+function getProducts($search, $category) {
+    global $productsCSV;
+    
+    $results = [];
 
-if ($search) {
-    $query .= " AND name LIKE ?";
-    $params[] = "%$search%";
-}
+    if (($handle = fopen($productsCSV, 'r')) !== FALSE) {
+        $headers = fgetcsv($handle, 1000, ',');
+        
 
-if ($category) {
-    $query .= " AND category = ?";
-    $params[] = $category;
-}
+        while (($row = fgetcsv($handle, 1000, ',')) !== FALSE) {
+            $products = array_combine($headers, $row);
+            switch (true) {
+                case !empty($search) && !empty($category):
+                    if (strpos(strtolower($products["category"]), $category) !== FALSE && strpos(strtolower($products["name"]), $search) !== FALSE) $results[] = $products;
+                    break;
 
+                case empty($search) && !empty($category):
+                    if (strpos(strtolower($products["category"]), $category) !== FALSE) $results[] = $products;
+                    break;
 
-$stmt = $conn->prepare($query);
-$stmt->execute($params);
-$result = $stmt->get_result();
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_array()) {
-        $products[] = $row;
+                case !empty($search) && empty($category):
+                    if (strpos(strtolower($products["name"]), $search) !== FALSE) $results[] = $products;
+                    break;
+                
+                default:
+                    $results[] = $products;
+                    break;
+            }
+            
+        }
+
+        // Close the file handle
+        fclose($handle);
     }
+    return $results;
 }
 
+function getCategories() {
+    global $productsCSV;
+    
+    $results = [];
 
-$categoryStmt = $conn->query("SELECT DISTINCT category FROM products");
-$categories = [];// $categoryStmt->fetchAll(PDO::FETCH_COLUMN);
-if ($categoryStmt->num_rows > 0) {
-    // Output data of each row
-    while ($row = $categoryStmt->fetch_assoc()) {
-        $categories[] = $row["category"];
+    if (($handle = fopen($productsCSV, 'r')) !== FALSE) {
+        $headers = fgetcsv($handle, 1000, ',');
+        
+
+        while (($row = fgetcsv($handle, 1000, ',')) !== FALSE) {
+            $products = array_combine($headers, $row);
+            $results[] = $products["category"];
+        }
+
+        // Close the file handle
+        fclose($handle);
     }
-} else {
-    echo "0 results";
+    return array_unique($results);
 }
-
-$stmt->close();
-$conn->close();
 ?>
 
 

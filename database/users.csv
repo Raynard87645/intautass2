@@ -1,0 +1,9 @@
+id,name,username,email,password
+1,"John Doe",john,john@example.com,$2y$10$H1djMwECzWD/DP8Pu/BxYul3lcOZi/J/GPghKiFDsOgLeRZRRrnsC
+2,"Jane Smith",jane,jane@example.com,$2y$10$qQAcsRsMo8.0Blr26F9d/.5RLMBZhHn1HIXs/H8mjGlu5PQiysP.G
+3,"Alice Johnson",alice,alice@example.com,$2y$10$IokE0AIHxO2LEte1/ENy7.Pu4aU/zU8enw3KjzgiO325y1HTkfYkS
+4,"Raynard Henry",root,john@example.com,$2y$10$Ie3Uxwu6hgM5v7FaZnxCHubUm.6aOZz5MmMZ9fjzVU4FcNFqnFGFG
+5,"Raynard Henry",raynardhenryf,henryraynard90@gmail.com,$2y$10$m11qGeX7alyNmbNa/1W/9.ryLDtK5.9Qz29VA6zAGEtQK9Fsp72Nm
+5,"Appfinity Technologies",raynardhenryfs,henryraynard90s@gmail.com,$2y$10$WmvJzl/nBngmLN6eS0F.OOCQFJpJUmLUpDLefma6t.vl6azLZTqu2
+5,"Robert Peyreigne ",raynard876459w,henryraynard90ss@gmail.com,$2y$10$FQvcslNy6MoNfnNMsNBys.6Ez4ntTcdb2ZkBjKaUXIE5QPK9RnBU2
+5,"Raynard Admin",henryraynard2290,henryraynardwww90@gmail.com,$2y$10$WFkut7dExqY02HnAJpunROO.jubn8Ty2B3jyDpZ.3ChOi4x27KfIW

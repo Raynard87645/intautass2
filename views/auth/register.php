@@ -8,6 +8,7 @@ include "../../layout/auth.php";
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -17,17 +18,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Passwords do not match';
     } else {
         try {
-            $stmt = $conn->prepare("INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)");
-            $stmt->execute([$name, $email, password_hash($password, PASSWORD_DEFAULT)]);
-            $stmt->close();
-            $conn->close();
-            header('Location: /login.php');
-            exit();
+            $rowcount = 0;
+            $userexist = false;
+
+            if (($handle = fopen($usersCSV, 'r')) !== FALSE) {
+                $headers = fgetcsv($handle, 1000, ',');
+                $results = [];
+                $rowcount = count($headers);
+                while (($row = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                    $users = array_combine($headers, $row);
+                    if (strpos($users["email"], $email) !== FALSE || strpos($users["username"], $username) !== FALSE) {
+                        $userexist = true;
+                    }
+                }
+                fclose($handle);
+            }   
+            if (!$userexist && ($handle = fopen($usersCSV, 'a')) !== FALSE) {
+                // Write user's data as a row in the CSV file
+                fputcsv($handle, [$rowcount, $name, $username, $email, password_hash($password, PASSWORD_DEFAULT)]);
+                $_SESSION['user_id'] = $rowcount;
+                $_SESSION['name'] = $name;
+                $_SESSION['username'] = $username;
+                header('Location: ../products.php');
+                exit();
+                
+            }else {
+                $error = "Username or email already exists";
+            }
         } catch (PDOException $e) {
-            $error = 'Name or email already exists';
+            $error = 'Username or email already exists';
         }
     }
 }
+
 ?>
 
 
@@ -39,14 +62,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php if ($error): ?>
                     <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
                 <?php endif; ?>
-                <form method="POST">
+                <form method="POST" class="<?php echo !empty($error)? 'was-validated': ''; ?>" novalidate>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control invalid" id="name" name="name" value="<?php echo htmlspecialchars($name); ?>" required>
+                    </div>
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+                        <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($username); ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>

@@ -4,8 +4,7 @@
 ?>
 
 
-<?php include "../landing.php" ?>
-    
+<?php include "../landing.php" ?>  
 
 
 

@@ -75,7 +75,8 @@ function getCategories() {
 <section class="bg-light py-5">
     <div class="container">  
         <div class="row mb-4">
-        <div class="col-md-6"><h3>Products</h3></div>
+            <div class="col-md-12"><h3>Hello, <?php echo htmlspecialchars($_SESSION['name']); ?>!</h3></div>
+            <div class="col-md-6"><h3>Products</h3></div>
             <div class="col-md-6 text-left">
                 <form class="d-flex" method="GET">
                     <input type="text" name="search" class="form-control me-2" placeholder="Search products..." 

@@ -15,7 +15,7 @@
         </p>
 
         <div class = "image">
-        <img src="/public/images/logo.jpg" alt = "Logo">
+            <img src="/public/images/logo.jpg" alt = "Logo">
         </div>
     </div>
 </section>

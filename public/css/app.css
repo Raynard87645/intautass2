@@ -1,0 +1,13 @@
+
+
+.display-image {
+  max-width: 50vw;
+  height: auto;
+  margin: 0 auto;
+}
+
+.display-image img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}

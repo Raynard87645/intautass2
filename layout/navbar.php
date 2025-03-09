@@ -12,7 +12,7 @@
             </li>
             <?php if($_SESSION['name']){ ?>
             <li class="nav-item">
-              <a class="nav-link  <?php  echo basename($_SERVER['PHP_SELF']) == 'welcome.php' ?'active' :'' ?>" href="/views/welcome.php">Welcome</a>
+              <a class="nav-link  <?php  echo basename($_SERVER['PHP_SELF']) == 'home.php' ?'active' :'' ?>" href="/views/home.php">Dashboard</a>
             </li>
             <li class="nav-item">
               <a class="nav-link  <?php  echo basename($_SERVER['PHP_SELF']) == 'products.php' ?'active' :'' ?>" href="/views/products.php">Products</a>

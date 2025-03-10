@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/">Quick Cart</a>
+    <a class="navbar-brand" href="#">
+      <img src="/public/images/logo.jpg" class="logo" alt = "Logo">
+      <!-- <img src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top"> -->
+      Quick Cart
+    </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -12,7 +16,7 @@
             </li>
             <?php if($_SESSION['name']){ ?>
             <li class="nav-item">
-              <a class="nav-link  <?php  echo basename($_SERVER['PHP_SELF']) == 'home.php' ?'active' :'' ?>" href="/views/home.php">Dashboard</a>
+              <a class="nav-link  <?php  echo basename($_SERVER['PHP_SELF']) == 'welcome.php' ?'active' :'' ?>" href="/views/welcome.php">Dashboard</a>
             </li>
             <li class="nav-item">
               <a class="nav-link  <?php  echo basename($_SERVER['PHP_SELF']) == 'products.php' ?'active' :'' ?>" href="/views/products.php">Products</a>

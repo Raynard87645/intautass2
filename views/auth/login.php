@@ -12,8 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
     
-    if (loginCSV($email, $password)) {
-        header('Location: ../products.php');
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $error = 'Invalid email address';
+    }else if (strlen($password)< 8) {
+        $error = 'Password must be at least 8 characters long';
+    }else if (loginCSV($email, $password)) {
+        header('Location: ../welcome.php');
         exit();
     } else {
         $error = 'Invalid email or password';

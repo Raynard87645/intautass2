@@ -6,12 +6,15 @@
                     <div class="col-xxl-5">
                         <!-- Header text content-->
                         <div class="text-center text-xxl-start">
+                            <?php if(isset($_SESSION['name'])): ?>
+                                <div class="fs-3 welcome text-white">Logged in as <?php echo htmlspecialchars( $_SESSION['name']); ?><div/>
+                            <?php endif; ?>
                             <div class="badge bg-gradient-primary-to-secondary text-white mb-4"><div class="text-uppercase">Hungry &middot; Order &middot; Eat</div></div>
-                            <div class="fs-3 fw-light text-muted">I get the best food product</div>
-                            <h1 class="display-3 fw-bolder mb-5"><span class="text-gradient d-inline">Get food fast and easy</span></h1>
+                            <div class="fs-3 fw-light text-white text-muted">I get the best food product</div>
+                            <h1 class="display-3 fw-bolder text-white mb-5"><span class="text-gradient d-inline">Get food fast and easy</span></h1>
                             <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
                                 <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="/views/products.php">Start Shoping</a>
-                                <a class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder" href="/views/contact.php">Get In Touch</a>
+                                <a class="btn btn-outline-info btn-lg px-5 py-3 fs-6 fw-bolder" href="/views/contact.php">Get In Touch</a>
                             </div>
                         </div>
                     </div>
@@ -31,11 +34,6 @@
                         <h2 class="display-5 fw-bolder"><span class="text-gradient d-inline">About Quick Cart</span></h2>
                         <p class="lead fw-light mb-4">Get food delivered to you anywhere at your own convenience.</p>
                         <p class="text-muted">Let Quick Cart bring you the best in value for all your food needs.</p>
-                        <!-- <div class="d-flex justify-content-center fs-2 gap-4">
-                            <a class="text-gradient" href="#!"><i class="bi bi-twitter"></i></a>
-                            <a class="text-gradient" href="#!"><i class="bi bi-linkedin"></i></a>
-                            <a class="text-gradient" href="#!"><i class="bi bi-github"></i></a>
-                        </div> -->
                     </div>
                 </div>
             </div>

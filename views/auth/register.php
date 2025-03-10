@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_id'] = $rowcount;
                 $_SESSION['name'] = "{$firstname}  {$lastname}";
                 $_SESSION['username'] = $username;
-                header('Location: ../products.php');
+                header('Location: ../welcome.php');
                 exit();
                 
             }else {

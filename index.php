@@ -1,5 +1,4 @@
 <?php 
-    // require "database/seed.php";
     require_once "includes/auth.php";
     include "layout/app.php"; 
 ?>

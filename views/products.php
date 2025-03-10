@@ -1,6 +1,6 @@
 
 <?php
-require_once "../config.php";
+// require_once "../config.php";
 require_once "../config/database.php";
 require_once "../includes/auth.php";
 include "../layout/app.php";
@@ -10,7 +10,7 @@ requireLogin();
 
 $search = strtolower($_GET['search']) ?? '';
 $category = strtolower($_GET['category']) ?? '';
-
+$loadingitems = [1,2,3,4,5,6];
 $products = getProducts($search, $category);
 $categories = getCategories();
 function getProducts($search, $category) {
@@ -83,10 +83,10 @@ function getCategories() {
                     <input type="text" name="search" class="form-control me-2" placeholder="Search products..." 
                             value="<?php echo htmlspecialchars($search); ?>">
                     <select name="category" class="form-select me-2" style="width: auto;">
-                        <option value="">All Categories</option>
+                        <option value="" <?php echo $_GET['category'] === "" ? 'selected' : ''; ?>>All Categories</option>
                         <?php foreach ($categories as $cat): ?>
                             <option value="<?php echo htmlspecialchars($cat); ?>" 
-                                    <?php echo $category === $cat ? 'selected' : ''; ?>>
+                                    <?php echo $_GET['category'] === $cat ? 'selected' : ''; ?>>
                                 <?php echo htmlspecialchars($cat); ?>
                             </option>
                         <?php endforeach; ?>
@@ -97,6 +97,14 @@ function getCategories() {
         </div>
 
         <div class="row">
+            <?php if(empty($products)): ?>
+                <div class="col-md-12">
+                    <div class="no-item-container">
+                        <img src="/public/images/no-item-found.webp" alt="no-item"/>
+                        <h4>No Product Found</h4>
+                    </div>
+                </div>
+            <?php endif ?>
             <?php foreach ($products as $product): ?>
                 <div class="col-md-6 col-lg-3 mb-4">
                     <div class="card h-100">
@@ -117,6 +125,8 @@ function getCategories() {
                     </div>
                 </div>
             <?php endforeach; ?>
+            
+
         </div>
 
     </div>

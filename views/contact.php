@@ -4,7 +4,7 @@
 ?>
 
 
-<section class="bg-light py-5">
+<section class="bg-light py-5 app-content"">
 
 </section>
 

@@ -2,9 +2,9 @@
     include "../layout/app.php"; 
     $database = [
         "users" => [
-            ['id' => 1, 'name' => 'John Doe', 'username' => "john", 'email' => 'john@example.com', "password" => password_hash("password", PASSWORD_DEFAULT)],
-            ['id' => 2, 'name' => 'Jane Smith', 'username' => "jane", 'email' => 'jane@example.com', "password" => password_hash("password", PASSWORD_DEFAULT)],
-            ['id' => 3, 'name' => 'Alice Johnson', 'username' => "alice",  'email' => 'alice@example.com', "password" => password_hash("password", PASSWORD_DEFAULT)],
+            ['id' => 1, 'first_name' => 'John', 'last_name' => 'Doe', 'username' => "john", 'email' => 'john@example.com', "password" => password_hash("password", PASSWORD_DEFAULT)],
+            ['id' => 2, 'first_name' => 'Jane', 'last_name' => 'Smith', 'username' => "jane", 'email' => 'jane@example.com', "password" => password_hash("password", PASSWORD_DEFAULT)],
+            ['id' => 3, 'first_name' => 'Alice', 'last_name' => 'Johnson', 'username' => "alice",  'email' => 'alice@example.com', "password" => password_hash("password", PASSWORD_DEFAULT)],
         ],
         "products" => [
             ["id" => 1, "name" => "Fry Chicken", "description" => "Fry chicken mixed with fries", "price" =>  299.99, "category" => "Dairy product", "image_url" => "/public/images/img1.jpg", "status" => false],

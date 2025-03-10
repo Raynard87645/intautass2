@@ -1,6 +1,6 @@
 
 <?php
-require_once "../../config.php";
+// require_once "../../config.php";
 require_once "../../config/database.php";
 require_once "../../includes/auth.php";
 include "../../layout/auth.php";
@@ -9,13 +9,20 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
-    $name = $_POST['name'];
+    $firstname = $_POST['first_name'];
+    $lastname = $_POST['last_name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $password2 = $_POST['password2'];
     
+    
+    
     if ($password !== $password2) {
         $error = 'Passwords do not match';
+    }else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $error = 'Invalid email address';
+    }else if (strlen($password)< 8) {
+        $error = 'Password must be at least 8 characters long';
     } else {
         try {
             $rowcount = 0;
@@ -35,9 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }   
             if (!$userexist && ($handle = fopen($usersCSV, 'a')) !== FALSE) {
                 // Write user's data as a row in the CSV file
-                fputcsv($handle, [$rowcount, $name, $username, $email, password_hash($password, PASSWORD_DEFAULT)]);
+                fputcsv($handle, [$rowcount, $firstname, $lastname, $username, $email, password_hash($password, PASSWORD_DEFAULT)]);
                 $_SESSION['user_id'] = $rowcount;
-                $_SESSION['name'] = $name;
+                $_SESSION['name'] = "{$firstname}  {$lastname}";
                 $_SESSION['username'] = $username;
                 header('Location: ../products.php');
                 exit();
@@ -64,8 +71,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
                 <form method="POST" class="<?php echo !empty($error)? 'was-validated': ''; ?>" novalidate>
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control invalid" id="name" name="name" value="<?php echo htmlspecialchars($name); ?>" required>
+                        <label for="first_name" class="form-label">First Name</label>
+                        <input type="text" class="form-control invalid" id="first_name" name="first_name" value="<?php echo htmlspecialchars($firstname); ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label">Last Name</label>
+                        <input type="text" class="form-control invalid" id="last_name" name="last_name" value="<?php echo htmlspecialchars($lastname); ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>

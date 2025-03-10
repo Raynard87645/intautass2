@@ -1,6 +1,8 @@
 <?php 
     require_once "../includes/auth.php";
     include "../layout/app.php";
+    //ensure only logged in Session can view this page
+    requireLogin();
 ?>
 <section class="bg-light py-5">
     <div class="container">

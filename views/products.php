@@ -5,6 +5,7 @@ require_once "../config/database.php";
 require_once "../includes/auth.php";
 include "../layout/app.php";
 
+//ensure only logged in Session can view this page
 requireLogin();
 
 $search = strtolower($_GET['search']) ?? '';

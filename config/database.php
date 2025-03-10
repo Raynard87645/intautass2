@@ -5,13 +5,13 @@
 $usersCSV = __DIR__.'/../database/users.csv';
 $productsCSV = __DIR__.'/../database/products.csv';
 // echo $port;
-$conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_DATABASE']);
+// $conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_DATABASE']);
 
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// // Check connection
+// if ($conn->connect_error) {
+//     die("Connection failed: " . $conn->connect_error);
+// }
 
 // Open the CSV file for reading
 // if (($handle = fopen($csvFile, 'r')) !== FALSE) {

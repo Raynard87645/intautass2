@@ -1,6 +1,6 @@
 
 <?php
-// require_once "../../config.php";
+require_once "../../config.php";
 require_once "../../config/database.php";
 require_once "../../includes/auth.php";
 include "../../layout/auth.php";
@@ -15,14 +15,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
     $password2 = $_POST['password2'];
     
-    
-    
+  
     if ($password !== $password2) {
         $error = 'Passwords do not match';
     }else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
         $error = 'Invalid email address';
     }else if (strlen($password)< 8) {
         $error = 'Password must be at least 8 characters long';
+    } else if($dbtype == "mysql") {
+        try {
+            $stmt = $conn->prepare("INSERT INTO tbl_users (first_name, last_name, username, email, password_hash) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$firstname, $lastname, $username, $email, password_hash($password, PASSWORD_DEFAULT)]);
+            login($email, $password);
+            $stmt->close();
+            $conn->close();
+            header('Location: ../welcome.php');
+            exit();
+        } catch (PDOException $e) {
+            $error = 'Name or email already exists';
+        }
     } else {
         try {
             $rowcount = 0;
@@ -56,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Username or email already exists';
         }
     }
+
 }
 
 ?>

@@ -1,6 +1,6 @@
 
 <?php
-// require_once "../../config.php";
+require_once "../../config.php";
 require_once "../../config/database.php";
 require_once "../../config/database.php";
 require_once "../../includes/auth.php";
@@ -16,12 +16,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Invalid email address';
     }else if (strlen($password)< 8) {
         $error = 'Password must be at least 8 characters long';
+    }else if ($dbtype == "mysql" && login($email, $password)) {
+        header('Location: ../welcome.php');
+        exit();
     }else if (loginCSV($email, $password)) {
         header('Location: ../welcome.php');
         exit();
     } else {
         $error = 'Invalid email or password';
     }
+
+    
 }
 ?>
 

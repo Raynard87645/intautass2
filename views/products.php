@@ -1,6 +1,6 @@
 
 <?php
-// require_once "../config.php";
+require_once "../config.php";
 require_once "../config/database.php";
 require_once "../includes/auth.php";
 include "../layout/app.php";
@@ -11,8 +11,47 @@ requireLogin();
 $search = strtolower($_GET['search']) ?? '';
 $category = strtolower($_GET['category']) ?? '';
 $loadingitems = [1,2,3,4,5,6];
-$products = getProducts($search, $category);
-$categories = getCategories();
+// $products = getProducts($search, $category);
+// $categories = getCategories();
+
+$query = "SELECT * FROM products WHERE 1=1";
+$params = [];
+
+if ($search) {
+    $query .= " AND name LIKE ?";
+    $params[] = "%$search%";
+}
+
+if ($category) {
+    $query .= " AND category = ?";
+    $params[] = $category;
+}
+
+$stmt = $conn->prepare($query);
+$stmt->execute($params);
+$result = $stmt->get_result();
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_array()) {
+        $products[] = $row;
+    }
+}
+
+
+$categoryStmt = $conn->query("SELECT DISTINCT category FROM products");
+$categories = [];// $categoryStmt->fetchAll(PDO::FETCH_COLUMN);
+if ($categoryStmt->num_rows > 0) {
+    // Output data of each row
+    while ($row = $categoryStmt->fetch_assoc()) {
+        $categories[] = $row["category"];
+    }
+} else {
+    echo "0 results";
+}
+
+$stmt->close();
+$conn->close();
+
+
 function getProducts($search, $category) {
     global $productsCSV;
     
@@ -73,7 +112,7 @@ function getCategories() {
 
 
     
-<section class="bg-light py-5">
+<section class="bg-light py-5 app-content">
     <div class="container">  
         <div class="row mb-4">
             <div class="col-md-12"><h3>Hello, <?php echo htmlspecialchars($_SESSION['name']); ?>!</h3></div>

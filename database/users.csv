@@ -1,4 +1,4 @@
 id,first_name,last_name,username,email,password
-1,John,Doe,john,john@example.com,$2y$10$jX.BiVgSOWc54sJQDTpaeOlJ3agJOd7WY.ysHGHq.8Avj8mfrOlea
-2,Jane,Smith,jane,jane@example.com,$2y$10$8ObEpglXg9zPKNwyCgJ7Y.pjPY12kLyDYLulFkFC4qChWtg01r8Ji
-3,Alice,Johnson,alice,alice@example.com,$2y$10$E.36gLkUDEI4m7J2IHzeyeo71XUSErZ8lB/Mlpr/3njubEL9JzZ9C
+1,John,Doe,john,john@example.com,$2y$10$GKM/jNa6vyd.CJrL3Q8UFO.oh2Qt/fgZxB7EE3CBeg1L8gnosuwf2
+2,Jane,Smith,jane,jane@example.com,$2y$10$T3qvnc4kzRsXFPElKqtj/eF8FRQX4Nb93EZTFLptHzmYxqa9tIx4m
+3,Alice,Johnson,alice,alice@example.com,$2y$10$8SFnPrRnsqiY8uyDmLDsxey9Sp7FiP4qSDzA46KJ.BVQkNHcMVp4i

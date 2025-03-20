@@ -1,4 +1,6 @@
 <?php 
+    require_once "../config.php";
+    require_once "../config/database.php";
     require_once "../includes/auth.php";
     include "../layout/app.php";
 
@@ -33,7 +35,15 @@
         }
 
         // If No Errors, Save Message
-        if (empty($errors)) {
+        if ($dbtype == "mysql" && empty($errors)) {
+            $stmt = $conn->prepare("INSERT INTO contacts (name, email, message, phone) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$name, $email, $message, $phone]);
+            $stmt->close();
+            $conn->close();
+            
+
+            $success = "Your message has been sent successfully!";
+        }else if (empty($errors)) {
             $messageData = "Name: $name | Email: $email | Phone: $phone | Message: $message\n";
             file_put_contents("messages.txt", $messageData, FILE_APPEND);
             $success = "Your message has been sent successfully!";
@@ -44,7 +54,7 @@
 ?>
 
 
-<section class="bg-light py-5  app-content"">
+<section class="bg-light py-5  app-content">
 <div class="contact-container mt-5">
     <h2 class="text-center">Contact Us</h2>
 

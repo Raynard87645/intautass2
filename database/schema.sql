@@ -1,6 +1,8 @@
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(64) NOT NULL UNIQUE,
+    first_name VARCHAR(64) NOT NULL,
+    last_name VARCHAR(64) NOT NULL,
+    username VARCHAR(64) NOT NULL UNIQUE,
     email VARCHAR(120) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL
 );
@@ -13,6 +15,14 @@ CREATE TABLE IF NOT EXISTS products (
     category VARCHAR(50) NOT NULL,
     image_url VARCHAR(500) NOT NULL,
     status BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS contacts (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    message TEXT NOT NULL,
+    phone VARCHAR(64) NOT NULL,
+    email VARCHAR(120) NOT NULL
 );
 
 INSERT INTO products (name, description, price, category, image_url, status) VALUES

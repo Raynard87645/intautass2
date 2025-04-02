@@ -1,9 +1,9 @@
 
 <?php
-require_once "../../config.php";
-require_once "../../config/database.php";
-require_once "../../includes/auth.php";
-include "../../layout/auth.php";
+require_once "config.php";
+require_once "config/database.php";
+require_once "includes/auth.php";
+include "layouts/auth.php";
 
 $error = '';
 
@@ -24,12 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Password must be at least 8 characters long';
     } else if($dbtype == "mysql") {
         try {
-            $stmt = $conn->prepare("INSERT INTO tbl_users (first_name, last_name, username, email, password_hash) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, username, email, password_hash) VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([$firstname, $lastname, $username, $email, password_hash($password, PASSWORD_DEFAULT)]);
             login($email, $password);
             $stmt->close();
             $conn->close();
-            header('Location: ../welcome.php');
+            header('Location: /dashboard');
             exit();
         } catch (PDOException $e) {
             $error = 'Name or email already exists';
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_id'] = $rowcount;
                 $_SESSION['name'] = "{$firstname}  {$lastname}";
                 $_SESSION['username'] = $username;
-                header('Location: ../welcome.php');
+                header('Location: /dashboard');
                 exit();
                 
             }else {
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </form>
                 <div class="text-center mt-3">
-                    <p>Already have an account? <a href="login.php">Login here</a></p>
+                    <p>Already have an account? <a href="/login">Login here</a></p>
                 </div>
             </div>
         </div>

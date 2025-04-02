@@ -24,6 +24,11 @@
 
     
     $database = [
+        // "tbl_users" => [
+        //     ['id' => 1, 'first_name' => 'John', 'last_name' => 'Doe', 'username' => "john", 'email' => 'john@example.com', "password" => password_hash("password", PASSWORD_DEFAULT)],
+        //     ['id' => 2, 'first_name' => 'Jane', 'last_name' => 'Smith', 'username' => "jane", 'email' => 'jane@example.com', "password" => password_hash("password", PASSWORD_DEFAULT)],
+        //     ['id' => 3, 'first_name' => 'Alice', 'last_name' => 'Johnson', 'username' => "alice",  'email' => 'alice@example.com', "password" => password_hash("password", PASSWORD_DEFAULT)],
+        // ],
         "users" => [
             ['id' => 1, 'first_name' => 'John', 'last_name' => 'Doe', 'username' => "john", 'email' => 'john@example.com', "password" => password_hash("password", PASSWORD_DEFAULT)],
             ['id' => 2, 'first_name' => 'Jane', 'last_name' => 'Smith', 'username' => "jane", 'email' => 'jane@example.com', "password" => password_hash("password", PASSWORD_DEFAULT)],

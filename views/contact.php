@@ -1,8 +1,8 @@
 <?php 
-    require_once "../config.php";
-    require_once "../config/database.php";
-    require_once "../includes/auth.php";
-    include "../layout/app.php";
+    require_once "config.php";
+    require_once "config/database.php";
+    require_once "includes/auth.php";
+    include "layouts/app.php";
 
     $errors = [];
     $success = "";
@@ -109,4 +109,4 @@
     </div>
 </section>
 
-<?php include "../layout/footer.php" ?>
+<?php include "layouts/footer.php" ?>

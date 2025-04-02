@@ -1,7 +1,3 @@
 <?php 
-    require_once "includes/auth.php";
-    include "layout/app.php"; 
+    require_once "routes/web.php";
 ?>
-
-<?php include "landing.php" ?>
-<?php include "layout/footer.php" ?>

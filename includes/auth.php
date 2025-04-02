@@ -14,8 +14,10 @@ function requireLogin() {
 
 function login($email, $password) {
     global $conn;
-    
-    $stmt = $conn->prepare("SELECT * FROM tbl_users WHERE email = ?");
+    try {
+        //code...
+   
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
     if ($stmt === false) {
         die("Error preparing statement: " . $conn->error);
     }
@@ -44,6 +46,9 @@ function login($email, $password) {
     $conn->close();
 
     return false;
+} catch (\Throwable $th) {
+    echo $th;
+}
 }
 
 function loginCSV($email, $password) {

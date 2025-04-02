@@ -1,9 +1,9 @@
 
 <?php
-require_once "../../config.php";
-require_once "../../config/database.php";
-require_once "../../includes/auth.php";
-include "../../layout/auth.php";
+require_once "config.php";
+require_once "config/database.php";
+require_once "includes/auth.php";
+include "layouts/auth.php";
 
 $error = '';
 
@@ -16,10 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }else if (strlen($password)< 8) {
         $error = 'Password must be at least 8 characters long';
     }else if ($dbtype == "mysql" && login($email, $password)) {
-        header('Location: ../welcome.php');
+        header('Location: /dashboard');
         exit();
     }else if (loginCSV($email, $password)) {
-        header('Location: ../welcome.php');
+        header('Location: /dashboard');
         exit();
     } else {
         $error = 'Invalid email or password';
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </form>
                 <div class="text-center mt-3">
-                    <p>Don't have an account? <a href="register.php">Register here</a></p>
+                    <p>Don't have an account? <a href="/register">Register here</a></p>
                 </div>
             </div>
         </div>

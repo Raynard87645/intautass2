@@ -1,12 +1,16 @@
 
 <?php
-require_once "../config.php";
-require_once "../config/database.php";
-require_once "../includes/auth.php";
-include "../layout/app.php";
+require_once "config.php";
+require_once "config/database.php";
+require_once "includes/auth.php";
+require_once "includes/cart.php";
+include "layouts/app.php";
 
 //ensure only logged in Session can view this page
 requireLogin();
+
+
+
 
 $search = strtolower($_GET['search']) ?? '';
 $category = strtolower($_GET['category']) ?? '';
@@ -108,6 +112,9 @@ function getCategories() {
     }
     return array_unique($results);
 }
+
+// clearCart()
+
 ?>
 
 
@@ -147,12 +154,11 @@ function getCategories() {
             <?php foreach ($products as $product): ?>
                 <div class="col-md-6 col-lg-3 mb-4">
                     <div class="card h-100">
-                    <?php $product; ?>
                         <img src="<?php echo htmlspecialchars($product['image_url']);?>" 
                                 class="card-img-top" alt="<?php echo htmlspecialchars($product['name']); ?>"
                                 style="height: 200px; object-fit: cover;">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
+                            <a href="/products/<?php echo $product['id'] ?>"><h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5></a>
                             <p class="card-text"><?php $description = htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8'); echo $description; ?></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fs-5 fw-bold">$<?php echo number_format($product['price'], 2); ?></span>
@@ -160,6 +166,11 @@ function getCategories() {
                                     <?php echo $product['status'] ? 'Instock' : 'Outstock'; ?>
                                 </span>
                             </div>
+                            <?php if($product['status']){ ?>
+                                
+
+                                <button type="button" class="btn btn-warning btn-sm mt-2 add-to-cart-button"  data-pid="<?php echo $product['id'] ?>" data-price="<?php echo $product['price'] ?>" data-name="<?php echo $product['name'] ?>" data-avatar="<?php echo $product['image_url'] ?>"  data-category="<?php echo $product['category'] ?>">Add to cart</button>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -171,5 +182,34 @@ function getCategories() {
     </div>
 </section>
 
+<script>
+    document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-pid');
+            const name = this.getAttribute('data-name');
+            const price = this.getAttribute('data-price');
+            const avatar = this.getAttribute('data-avatar');
+            const category = this.getAttribute('data-category');
+           
+            fetch('/addcart', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `id=${id}&name=${name}&price=${price}&avatar=${avatar}&category=${category}`//JSON.stringify({id: id, name: name, price: price, avatar: avatar, category: category})
+            }).then(response => response.text())
+            .then(data => {
+                document.getElementById("cart-count").innerHTML = data
+            });
 
-<?php include "../layout/footer.php" ?>
+            
+
+        });
+        
+    });
+
+  
+</script>
+<?php include "layouts/footer.php" ?>

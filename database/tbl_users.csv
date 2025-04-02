@@ -1,0 +1,4 @@
+id,first_name,last_name,username,email,password
+1,John,Doe,john,john@example.com,$2y$10$4jpA.AuJlEVoYWXvqpoj2eZYZkRyC9CtBqkxF88IAeGucXrOJ.C7e
+2,Jane,Smith,jane,jane@example.com,$2y$10$0sJAfrhpr2r1Ez7KaO0Du.ws3Yh6.3HaEDh8p4jJnIpigNH97N6kO
+3,Alice,Johnson,alice,alice@example.com,$2y$10$a5g3UOzj5A6F07WVGRr9c.A1v0trJbfRiVLBhQuueE3/NovlA8lRG

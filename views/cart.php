@@ -7,6 +7,10 @@
     requireLogin();
 
     $cartitems = getCartContents();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id'];
+        removeFromCart($id);
+    }
 ?>
 
 
@@ -20,7 +24,7 @@
                     <div class="card-body">
                     <?php foreach ($cartitems as $key => $item): ?>
                       
-                        <div class="row cart-item mb-3">
+                        <div class="row cart-item mb-3" id="cart-item<?php echo $key?>">
                             <div class="col-md-3">
                                 <img src="<?php echo htmlspecialchars($item['avatar']);?>" alt="Product 1" class="img-fluid rounded">
                             </div>
@@ -30,16 +34,17 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="input-group">
-                                    <button class="btn btn-outline-secondary btn-sm" type="button">-</button>
-                                    <input style="max-width:100px" type="text" class="form-control  form-control-sm text-center quantity-input" value="<?php echo $item['quantity']?>">
-                                    <button class="btn btn-outline-secondary btn-sm" type="button" onclick="">+</button>
+                                    <button data-pid="<?php echo $key?>" data-update="minus" class="btn btn-outline-secondary btn-sm update-cart-item-button" type="button">-</button>
+                                    <input id="cart-quantity<?php echo $key?>" style="max-width:100px" type="text" class="form-control  form-control-sm text-center quantity-input" value="<?php echo $item['quantity']?>">
+                                    <button data-pid="<?php echo $key?>" data-update="add" class="btn btn-outline-secondary btn-sm update-cart-item-button" type="button" onclick="">+</button>
                                 </div>
                             </div>
                             <div class="col-md-2 text-end">
                                 <p class="fw-bold">$<?php echo number_format($item['price'], 2); ?></p>
-                                <button class="btn btn-sm btn-outline-danger" >
+                                
+                                <button data-pid="<?php echo $key?>" type="submit" class="btn btn-sm btn-outline-danger remove-cart-item-button" >
                                         <i class="fa fa-trash"></i>
-                                    </button>
+                                </button>
                             </div>
                         </div>
                         <hr>
@@ -60,7 +65,7 @@
                         <h5 class="card-title mb-4">Order Summary</h5>
                         <div class="d-flex justify-content-between mb-3">
                             <span>Subtotal</span>
-                            <span>$<?php echo number_format(getCartSubTotalPrice(), 2) ?></span>
+                            <span id="cart-subtotal">$<?php echo number_format(getCartSubTotalPrice(), 2) ?></span>
                         </div>
                         <div class="d-flex justify-content-between mb-3">
                             <span>Shipping</span>
@@ -68,12 +73,12 @@
                         </div>
                         <div class="d-flex justify-content-between mb-3">
                             <span>Tax</span>
-                            <span>$<?php echo number_format(0.15 * getCartSubTotalPrice(), 2)  ?></span>
+                            <span id="cart-tax">$<?php echo number_format(0.15 * getCartSubTotalPrice(), 2)  ?></span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between mb-4">
                             <strong>Total</strong>
-                            <strong>$<?php echo number_format(getCartTotalPrice(), 2) ?></strong>
+                            <strong id="cart-total">$<?php echo number_format(getCartTotalPrice(), 2) ?></strong>
                         </div>
                         <a href="/checkout">
                             <button class="btn btn-primary w-100">Proceed to Checkout</button>
@@ -93,5 +98,73 @@
 <?php include "layouts/footer.php" ?>
 
 <script>
+    document.querySelectorAll('button.remove-cart-item-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-pid');
+           
+            fetch('/delete-cartitem', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `id=${id}`//JSON.stringify({id: id, name: name, price: price, avatar: avatar, category: category})
+            }).then(response => response.text())
+            .then(response => {
+                const data= JSON.parse(response)
+                document.getElementById("cart-count").innerHTML = data['count']
+                document.getElementById("cart-subtotal").innerHTML = data['subtotal'].toFixed(2)
+                document.getElementById("cart-tax").innerHTML = (0.15 * data['subtotal']).toFixed(2)
+                document.getElementById("cart-total").innerHTML = data['total'].toFixed(2)
+                document.getElementById(`cart-item${id}`).remove()
+            });
 
+            
+
+        });
+        
+    });
+
+    document.querySelectorAll('button.update-cart-item-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-pid');
+            let quantity = document.getElementById(`cart-quantity${id}`)?.value
+            const update = this.getAttribute('data-update');
+            switch (update) {
+                case "add":
+                    quantity = parseInt(quantity) + 1
+                    break;
+            
+                default:
+                    quantity = parseInt(quantity) - 1
+                    break;
+            }
+           
+            fetch('/update-cartitem', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `id=${id}&quantity=${quantity}`//JSON.stringify({id: id, name: name, price: price, avatar: avatar, category: category})
+            }).then(response => response.text())
+            .then(response => {
+                const data= JSON.parse(response)
+                document.getElementById("cart-count").innerHTML = data['count']
+                document.getElementById("cart-subtotal").innerHTML = data['subtotal'].toFixed(2)
+                document.getElementById("cart-tax").innerHTML = (0.15 * data['subtotal']).toFixed(2)
+                document.getElementById("cart-total").innerHTML = data['total'].toFixed(2)
+
+                document.getElementById(`cart-quantity${id}`).value = quantity
+            });
+
+            
+
+        });
+        
+    });
+
+  
 </script>

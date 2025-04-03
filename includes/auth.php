@@ -7,7 +7,7 @@ function isLoggedIn() {
 
 function requireLogin() {
     if (!isLoggedIn()) {
-        header('Location: ../views/auth/login.php');
+        header('Location: /');
         exit();
     }
 }

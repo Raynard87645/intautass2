@@ -17,8 +17,8 @@
                 it straight to you. From your screen to your hands
                 </p>
                 <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
-                    <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="/views/products.php">Start Shoping</a>
-                    <a class="btn btn-outline-info btn-lg px-5 py-3 fs-6 fw-bolder" href="/views/contact.php">Get In Touch</a>
+                    <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="/products">Start Shoping</a>
+                    <a class="btn btn-outline-info btn-lg px-5 py-3 fs-6 fw-bolder" href="/contact">Get In Touch</a>
                 </div>
             </div>
             <div class="col-md-6">

@@ -183,7 +183,7 @@ function getCategories() {
 </section>
 
 <script>
-    document.querySelectorAll('button').forEach(button => {
+    document.querySelectorAll('button.add-to-cart-button').forEach(button => {
         button.addEventListener('click', function() {
             const id = this.getAttribute('data-pid');
             const name = this.getAttribute('data-name');

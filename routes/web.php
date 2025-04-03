@@ -17,7 +17,15 @@ switch ($request) {
     case '/addcart':
         require "{$baseDir}includes/addcart.php";
         break;
-        
+
+    case '/delete-cartitem':
+        require "{$baseDir}includes/removecartitem.php";
+        break;
+
+    case '/update-cartitem':
+        require "{$baseDir}includes/updatecartitem.php";
+        break;
+
     case '/contact':        
         require  "{$viewDir}contact.php";
         break;

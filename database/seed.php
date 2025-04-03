@@ -15,6 +15,12 @@
     // Execute the SQL commands
     if ($conn->multi_query($sql)) {
         echo "<h5>SQL file imported successfully. ... </h5>\r\n";
+        do {
+            // Store first result set (even if we don't use it)
+            if ($result = $conn->store_result()) {
+                $result->free();
+            }
+        } while ($conn->more_results() && $conn->next_result());
     } else {
         echo "Error importing SQL file: " . $conn->error;
     }

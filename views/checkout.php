@@ -25,7 +25,29 @@
         <h3 class="mb-5">Checkout</h3>
         <div class="row">
             <div class="col-lg-8">
-
+                <!-- Cart Summary -->
+                <div class="card cart-summary">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Order Summary</h5>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal">$<?php echo number_format(getCartSubTotalPrice(), 2) ?></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Shipping</span>
+                            <span>$0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Tax</span>
+                            <span id="cart-tax">$<?php echo number_format(0.15 * getCartSubTotalPrice(), 2)  ?></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4">
+                            <strong>Total</strong>
+                            <strong id="cart-total">$<?php echo number_format(getCartTotalPrice(), 2) ?></strong>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-4">
                 <form id="payment-form">

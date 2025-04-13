@@ -1,6 +1,7 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
 try{
     $mail = new PHPMailer(true);
     // Server settings
@@ -15,4 +16,3 @@ try{
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
-?>

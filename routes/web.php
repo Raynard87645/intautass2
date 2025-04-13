@@ -30,6 +30,10 @@ switch ($request) {
         require  "{$viewDir}contact.php";
         break;
 
+    case '/about-us':        
+        require  "{$viewDir}about.php";
+        break;
+
     case '/faq':        
         require  "{$viewDir}faq.php";
         break;

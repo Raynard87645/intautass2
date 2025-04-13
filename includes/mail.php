@@ -1,12 +1,12 @@
 <?php
-require_once '../config/mail.php';
+require_once 'config/mail.php';
 
-function sendMail($subject, $body, $content, $to, $to_name, $from = $_ENV['MAIL_FROM_ADDRESS'], $from_name = $_ENV["MAIL_FROM_NAME"]) {
+function sendMail($subject, $body, $content, $to, $to_name, $from = null, $from_name = null) {
     global $mail;
     try {
         //code...
         // Recipients
-        $mail->setFrom($from, $from_name);
+        $mail->setFrom($from??$_ENV["MAIL_FROM_ADDRESS"], $from_name??$_ENV["MAIL_FROM_NAME"]);
         $mail->addAddress($to, $to_name);
         
         // Content
@@ -18,9 +18,11 @@ function sendMail($subject, $body, $content, $to, $to_name, $from = $_ENV['MAIL_
         $mail->send();
 
         echo "Email send successfully.\n";
+        return true;
     } catch (\Throwable $th) {
-        //throw $th;
+        echo $th;
         echo "Error: Unable to send email.\n";
+        return false;
     }
     
 }

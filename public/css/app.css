@@ -48,3 +48,31 @@ h2 {
   height: 50px;
   margin-right: 10px;
 }
+
+
+
+.speedyui-partner {
+  --su-black-color: #000000;
+  --su-rubik-font: "Rubik", sans-serif;
+  font-family: var(--su-rubik-font);
+}
+.speedyui-partner h3 {
+  font-weight: 500;
+}
+.speedyui-partner .swiper-slide {
+  height: 95px;
+}
+.speedyui-partner .swiper-button-next, .speedyui-partner .swiper-button-prev {
+  width: 30px;
+  height: 30px;
+}
+.speedyui-partner .swiper-button-next::after, .speedyui-partner .swiper-button-prev::after {
+  font-size: 12px;
+  color: var(--su-black-color);
+}
+.speedyui-partner .swiper-button-next {
+  right: 0;
+}
+.speedyui-partner .swiper-button-prev {
+  left: 0;
+}

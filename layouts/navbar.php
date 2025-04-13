@@ -5,9 +5,9 @@ $itemcount = getCartTotalItems();
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
     <a class="navbar-brand" href="#">
-      <img src="/public/images/logo.jpg" class="logo" alt = "Logo">
+      <img src="/public/images/logo.jpeg" class="logo" alt = "Logo">
       <!-- <img src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top"> -->
-      Quick Cart
+      Orbit
     </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -26,6 +26,9 @@ $itemcount = getCartTotalItems();
               <a class="nav-link  <?php  echo $_SERVER['REQUEST_URI'] == '/products' ?'active' :'' ?>" href="products">Products</a>
             </li>
             <?php } ?>
+            <li class="nav-item">
+              <a class="nav-link  <?php  echo $_SERVER['REQUEST_URI'] == '/about-us' ?'active' :'' ?>" href="/about-us">About Us</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link  <?php  echo $_SERVER['REQUEST_URI'] == '/contact' ?'active' :'' ?>" href="/contact">Contact</a>
             </li>

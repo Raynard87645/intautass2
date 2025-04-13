@@ -3,6 +3,8 @@
 require_once "config.php";
 require_once "config/database.php";
 require_once "includes/auth.php";
+require_once "includes/mail.php";
+require_once "email/templates.php";
 include "layouts/auth.php";
 
 $error = '';
@@ -22,49 +24,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Invalid email address';
     }else if (strlen($password)< 8) {
         $error = 'Password must be at least 8 characters long';
-    } else if($dbtype == "mysql") {
+    } else {
         try {
             $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, username, email, password_hash) VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([$firstname, $lastname, $username, $email, password_hash($password, PASSWORD_DEFAULT)]);
-            login($email, $password);
+            $user = login($email, $password);
             $stmt->close();
             $conn->close();
-            header('Location: /dashboard');
-            exit();
-        } catch (PDOException $e) {
-            $error = 'Name or email already exists';
-        }
-    } else {
-        try {
-            $rowcount = 0;
-            $userexist = false;
+            
+            try {
+                $subject = "User Registration";
+                $company = "Orbit Eccomerce";
+                $name = $user["first_name"]. " ". $user["last_name"];
+                $body = registrationTemplate($name, $company, $email, $username);
+                $content = "<p>Test content</p>";
 
-            if (($handle = fopen($usersCSV, 'r')) !== FALSE) {
-                $headers = fgetcsv($handle, 1000, ',');
-                $results = [];
-                $rowcount = count($headers);
-                while (($row = fgetcsv($handle, 1000, ',')) !== FALSE) {
-                    $users = array_combine($headers, $row);
-                    if (strpos($users["email"], $email) !== FALSE || strpos($users["username"], $username) !== FALSE) {
-                        $userexist = true;
-                    }
-                }
-                fclose($handle);
-            }   
-            if (!$userexist && ($handle = fopen($usersCSV, 'a')) !== FALSE) {
-                // Write user's data as a row in the CSV file
-                fputcsv($handle, [$rowcount, $firstname, $lastname, $username, $email, password_hash($password, PASSWORD_DEFAULT)]);
-                $_SESSION['user_id'] = $rowcount;
-                $_SESSION['name'] = "{$firstname}  {$lastname}";
-                $_SESSION['username'] = $username;
+                sendMail($subject, $body , $content, $email, $name);
                 header('Location: /dashboard');
                 exit();
-                
-            }else {
-                $error = "Username or email already exists";
+
+            } catch (\Throwable $th) {
+                echo $th;
             }
+            
+            
         } catch (PDOException $e) {
-            $error = 'Username or email already exists';
+            $error = 'Name or email already exists';
         }
     }
 

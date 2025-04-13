@@ -1,7 +1,44 @@
 
 <?php 
-  require_once "includes/auth.php";
-  include "layouts/app.php";
+  require_once "config.php";
+    require_once "config/database.php";
+    require_once "includes/auth.php";
+    require_once "includes/mail.php";
+    include "layouts/app.php";
+
+    $errors = [];
+    $success = "";
+
+    // Form Submission Handling
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $email = trim($_POST["email"]);
+
+        // Validate Email
+        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "Email is required.";
+        }
+
+        // If No Errors, Save Message
+        if (empty($errors)) {
+            $stmt = $conn->prepare("INSERT INTO subscribe (email) VALUES (?)");
+            $stmt->execute([$email]);
+            $stmt->close();
+            $conn->close();
+            
+            $subject = "Subscription";
+            $company = "Digital Orbit";
+            $name = "";
+            $body = "Thanks for subscribing";
+            $content = "<p>Test content</p>";
+
+            sendMail($subject, $body , $content, $email, $name);
+
+            // $success = "Your message has been sent successfully!";
+        }
+    }
+
+    $companyName = "Digital Orbit";
+    $foundedYear = "2020";
 ?>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
@@ -39,6 +76,8 @@
                     <div class="text-center my-5">
                         <h2 class="display-6 fw-bolder"><span class="text-gradient d-inline">About Digital Orbit</span></h2>
                         <p class="lead fw-light mb-4">E-Commerce</p>
+                        <p>Founded in <?php echo $foundedYear; ?>, <?php echo $companyName; ?> started with a simple mission: to make online shopping better through technology. We're a relatively new company focusing on online advertising, cloud computing, digital streaming, artificial intelligence, and e-commerce.</p>
+                        <p>Our e-commerce division has quickly grown to become a key part of our business, helping retailers of all sizes succeed in the digital marketplace.</p>
                         <p class="text-muted">Let Digital Orbit bring you the best in value for all your needs.</p>
                     </div>
                 </div>
@@ -50,7 +89,6 @@
     <section class="speedyui speedyui-partner bg-light py-5">
         <div class="container text-center">   
             <h2 class="display-6 fw-bolder"><span class="text-gradient d-inline">Our Partners</span></h2>
-            <p class="lead fw-light mb-4">E-Commerce</p>
                         <p class="text-muted">Let Digital Orbit bring you the best in value for all your needs.</p>
             <div class="swiper-content position-relative mt-5 px-5">
                 <div class="swiper partnerswiper">
@@ -103,9 +141,9 @@
                     <h2 class="display-6 fw-bolder">Stay Updated with Our Newsletter</h2>
                     <p class="text-muted">Get the latest news, updates, and exclusive offers delivered straight to your
                         inbox.</p>
-                    <form class="row g-3 justify-content-center">
+                    <form action="" method="post" class="row g-3 justify-content-center">
                         <div class="col-md-8">
-                            <input type="email" class="form-control form-control-lg" placeholder="Enter your email address" required>
+                            <input type="email" name="email" class="form-control form-control-lg" placeholder="Enter your email address" required>
                         </div>
                         <div class="col-md-4">
                             <button type="submit" class="btn btn-primary btn-lg w-100">Subscribe Now</button>

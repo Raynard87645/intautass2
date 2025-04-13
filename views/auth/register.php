@@ -31,23 +31,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = login($email, $password);
             $stmt->close();
             $conn->close();
-            
-            try {
-                $subject = "User Registration";
-                $company = "Orbit Eccomerce";
-                $name = $user["first_name"]. " ". $user["last_name"];
-                $body = registrationTemplate($name, $company, $email, $username);
-                $content = "<p>Test content</p>";
+           
+            $subject = "User Registration";
+            $company = "Orbit Eccomerce";
+            $name = $user["first_name"]. " ". $user["last_name"];
+            $body = registrationTemplate($name, $company, $email, $username);
+            $content = "<p>Test content</p>";
 
-                sendMail($subject, $body , $content, $email, $name);
-                header('Location: /dashboard');
-                exit();
-
-            } catch (\Throwable $th) {
-                echo $th;
-            }
-            
-            
+            sendMail($subject, $body , $content, $email, $name);
+            header('Location: /dashboard');
+            exit();
         } catch (PDOException $e) {
             $error = 'Name or email already exists';
         }

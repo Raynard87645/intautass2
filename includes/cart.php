@@ -10,6 +10,12 @@
         unset($_SESSION['cart']);
     }
 
+    function productInCart($productId) {
+        if (isset($_SESSION['cart'][$productId])) return $_SESSION['cart'][$productId];
+
+        return false;
+    }
+
     function addToCart($productId, $quantity = 1, $price = 0, $name = '', $avatar = '', $category = '', $options = []) {
         if (isset($_SESSION['cart'][$productId])) {
             $_SESSION['cart'][$productId]['quantity'] += $quantity;
@@ -52,7 +58,7 @@
     function getCartTotalItems() {
         $total = 0;
         foreach ($_SESSION['cart'] as $key => $item) {
-            $total += $item['quantity'];
+            $total += (int)$item['quantity'];
         }
         return $total;
     }

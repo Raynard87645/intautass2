@@ -2,6 +2,8 @@
     require_once "config.php";
     require_once "config/database.php";
     require_once "includes/auth.php";
+    require_once "includes/mail.php";
+    require_once "email/templates.php";
     include "layouts/app.php";
 
     $errors = [];
@@ -35,17 +37,20 @@
         }
 
         // If No Errors, Save Message
-        if ($dbtype == "mysql" && empty($errors)) {
+        if (empty($errors)) {
             $stmt = $conn->prepare("INSERT INTO contacts (name, email, message, phone) VALUES (?, ?, ?, ?)");
             $stmt->execute([$name, $email, $message, $phone]);
             $stmt->close();
             $conn->close();
             
+            $subject = "Contact Us";
+            $company = "Orbit Eccomerce";
+            $name = $user["first_name"]. " ". $user["last_name"];
+            $body = contactUsTemplate($name, $company, $email, $subject);
+            $content = "<p>Test content</p>";
 
-            $success = "Your message has been sent successfully!";
-        }else if (empty($errors)) {
-            $messageData = "Name: $name | Email: $email | Phone: $phone | Message: $message\n";
-            file_put_contents("messages.txt", $messageData, FILE_APPEND);
+            sendMail($subject, $body , $content, $email, $name);
+
             $success = "Your message has been sent successfully!";
         }
     }

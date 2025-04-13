@@ -12,6 +12,11 @@ function requireLogin() {
     }
 }
 
+function loginToContinue() {
+    if (!isLoggedIn()) return true;
+    return false;
+}
+
 function login($email, $password) {
     global $conn;
     try {

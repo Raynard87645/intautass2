@@ -1,76 +1,66 @@
 <?php
 
 try {
-    //code...
-    
-$request = explode("?", $_SERVER['REQUEST_URI'])[0];
 $viewDir = __DIR__ ."/../views/";
 $baseDir = __DIR__ ."/../";
+$requestUri = strtok($_SERVER['REQUEST_URI'], '?');
+$basePath = dirname($_SERVER['SCRIPT_NAME']);
 
-switch ($request) {
-    case '':
-        
-    case '/':
-        require "{$baseDir}landing.php";
+$baseroutes = [
+    '/' => 'landing.php',
+    '/addcart' => 'includes/addcart.php',
+    '/delete-cartitem' => 'includes/removecartitem.php',
+    '/update-cartitem' => 'includes/updatecartitem.php',
+    '/seed/database' => 'database/seed.php'
+];
+
+$viewroutes = [
+    '/contact' => 'contact.php',
+    '/about-us' => 'about.php',
+    '/faq' => 'faq.php',
+    '/dashboard' => 'dashboard.php',
+    '/products' => 'products.php',
+    '/products/{id}' => 'product-details.php',
+    '/cart' => 'cart.php',
+    '/checkout' => 'checkout.php',
+    '/payment-success' => 'paymentsuccess.php',
+    '/login' => 'auth/login.php',
+    '/register' => 'auth/register.php'
+];
+
+
+$matched = false;
+
+foreach ($baseroutes as $route => $handler) {
+    $pattern = '#^' . preg_replace('/\{(\w+)\}/', '(?<$1>[^/]+)', $route) . '$#';
+    
+    if (preg_match($pattern, $requestUri, $matches)) {
+        $matched = true;
+        $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+
+        require "{$baseDir}/{$handler}";
         break;
-
-    case '/addcart':
-        require "{$baseDir}includes/addcart.php";
-        break;
-
-    case '/delete-cartitem':
-        require "{$baseDir}includes/removecartitem.php";
-        break;
-
-    case '/update-cartitem':
-        require "{$baseDir}includes/updatecartitem.php";
-        break;
-
-    case '/contact':        
-        require  "{$viewDir}contact.php";
-        break;
-
-    case '/about-us':        
-        require  "{$viewDir}about.php";
-        break;
-
-    case '/faq':        
-        require  "{$viewDir}faq.php";
-        break;
-
-    case '/dashboard':        
-        require  "{$viewDir}dashboard.php";
-        break;
-
-    case '/products':        
-        require  "{$viewDir}products.php";
-        break;
-
-    case '/cart':        
-        require  "{$viewDir}cart.php";
-        break;
-
-    case '/checkout':        
-        require  "{$viewDir}checkout.php";
-        break;
-
-    case '/payment-success':        
-        require  "{$viewDir}paymentsuccess.php";
-        break;
-
-    case '/login':        
-        require  "{$viewDir}auth/login.php";
-        break;
-
-    case '/register':        
-        require  "{$viewDir}auth/register.php";
-        break;
-
-    default:
-        // echo __DIR__ . $viewDir . 'admin/dashboard.php';
-        http_response_code(404);
-        require __DIR__ . $viewDir . '404.php';
+    }
 }
+
+foreach ($viewroutes as $route => $handler) {
+    $pattern = '#^' . preg_replace('/\{(\w+)\}/', '(?<$1>[^/]+)',  $route) . '$#';
+    if (preg_match($pattern, $requestUri, $matches)) {
+        $matched = true;
+        $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+        // $params = array_merge($params, $_GET);
+        require "{$viewDir}/{$handler}";
+        break;
+    }
+}
+
+if(!$matched){
+// Handle missing route file
+http_response_code(404);
+require "{$viewDir}404.php";
+}
+
+
 
 } catch (\Throwable $th) {
     echo $th;

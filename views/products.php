@@ -7,7 +7,7 @@ require_once "includes/cart.php";
 include "layouts/app.php";
 
 //ensure only logged in Session can view this page
-requireLogin();
+// requireLogin();
 
 
 
@@ -31,6 +31,7 @@ if ($category) {
     $params[] = $category;
 }
 
+$query.= " ORDER BY status DESC";
 $stmt = $conn->prepare($query);
 $stmt->execute($params);
 $result = $stmt->get_result();
@@ -122,7 +123,7 @@ function getCategories() {
 <section class="bg-light py-5 app-content">
     <div class="container">  
         <div class="row mb-4">
-            <div class="col-md-12"><h3>Hello, <?php echo htmlspecialchars($_SESSION['name']); ?>!</h3></div>
+            <?php if(!empty($_SESSION['name'])){ ?><div class="col-md-12"><h3>Hello, <?php echo htmlspecialchars($_SESSION['name']); ?>!</h3></div> <?php } ?>
             <div class="col-md-6"><h3>Products</h3></div>
             <div class="col-md-6 text-left">
                 <form class="d-flex" method="GET">
@@ -154,7 +155,7 @@ function getCategories() {
             <?php foreach ($products as $product): ?>
                 <div class="col-md-6 col-lg-3 mb-4">
                     <div class="card h-100">
-                        <img src="<?php echo htmlspecialchars($product['image_url']);?>" 
+                        <img onerror="this.src = '/public/images/noimage.jpg'" src="<?php echo htmlspecialchars($product['image_url']);?>" 
                                 class="card-img-top" alt="<?php echo htmlspecialchars($product['name']); ?>"
                                 style="height: 200px; object-fit: cover;">
                         <div class="card-body">

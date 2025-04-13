@@ -18,10 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }else if ($dbtype == "mysql" && login($email, $password)) {
         header('Location: /dashboard');
         exit();
-    }else if (loginCSV($email, $password)) {
-        header('Location: /dashboard');
-        exit();
-    } else {
+    }else {
         $error = 'Invalid email or password';
     }
 

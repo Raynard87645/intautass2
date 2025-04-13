@@ -4,7 +4,9 @@
     require_once "includes/auth.php";
     require_once "includes/cart.php";
     include "layouts/app.php";
-    requireLogin();
+
+    if(loginToContinue()) include "logintocontinue.php";
+    // requireLogin();
 
     $cartitems = getCartContents();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -16,6 +18,9 @@
 
 <section class="bg-light py-5  app-content">
     <div class="container py-5">
+
+    
+
         <h3 class="mb-5">Your Shopping Cart</h3>
         <div class="row">
             <div class="col-lg-8">
@@ -26,7 +31,7 @@
                       
                         <div class="row cart-item mb-3" id="cart-item<?php echo $key?>">
                             <div class="col-md-3">
-                                <img src="<?php echo htmlspecialchars($item['avatar']);?>" alt="Product 1" class="img-fluid rounded">
+                                <img onerror="this.src = '/public/images/noimage.jpg'" src="<?php echo htmlspecialchars($item['avatar']);?>" alt="Product 1" class="img-fluid rounded">
                             </div>
                             <div class="col-md-5">
                                 <h5 class="card-title"><?php echo htmlspecialchars($item['name']); ?></h5>
@@ -94,6 +99,7 @@
     
 
 </section>
+
 
 <?php include "layouts/footer.php" ?>
 

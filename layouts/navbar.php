@@ -1,6 +1,7 @@
 <?php 
 require_once "includes/cart.php";
 $itemcount = getCartTotalItems();
+$search = "";
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
@@ -9,10 +10,26 @@ $itemcount = getCartTotalItems();
       <!-- <img src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top"> -->
       Orbit
     </a>
+    <form action="/products" class="d-flex input-group w-auto">
+      <input
+        type="search"
+        name="search"
+        class="form-control rounded"
+        placeholder="Search"
+        aria-label="Search"
+        aria-describedby="search-addon"
+        value="<?php echo htmlspecialchars($search); ?>"
+      />
+      <button type="submit" class="input-group-text border-0" id="search-addon">
+        <i class="fa fa-search"></i>
+      </button>
+    </form>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
+        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
             <li class="nav-item">
@@ -35,6 +52,7 @@ $itemcount = getCartTotalItems();
           </ul>
         </div>
         
+        
         <?php if($_SESSION['name']){ ?>
           <div class="d-flex align-items-center gap-3">
           <a href="/cart">
@@ -45,7 +63,7 @@ $itemcount = getCartTotalItems();
                 <span class="visually-hidden">items</span>
               </span>
             </div>
-            </a>
+          </a>
             <div class="dropdown ">
                 <a href="#" class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                   <img
@@ -64,6 +82,15 @@ $itemcount = getCartTotalItems();
             </div>
           </div>
         <?php } else { ?>
+          <a href="/cart">
+            <div class="navbar-text position-relative">
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+              <span class="position-absolute top-30 start-10 translate-middle badge rounded-pill bg-danger">
+                <span id="cart-count"><?php echo getCartTotalItems() ?></span>
+                <span class="visually-hidden">items</span>
+              </span>
+            </div>
+          </a>
           <div class="navbar-text">
               <a href="/login" class="btn btn-primary ms-3">Login</a>
           </div>

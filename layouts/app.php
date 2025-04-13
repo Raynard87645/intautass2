@@ -10,15 +10,14 @@
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
 
     
-    <link type="text/css" href="public/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link type="text/css" href="public/css/app.css" rel="stylesheet">
+    <link type="text/css" href="/public/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link type="text/css" href="/public/css/app.css" rel="stylesheet">
   </head>
 <body>
 
   <main class="flex-shrink-0">
       <?php 
         include "navbar.php"; 
-        include basename($_GET['page']).'.php'; 
       ?>
 
   </main>

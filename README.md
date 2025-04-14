@@ -7,6 +7,20 @@ DB_PASSWORD=
 DB_DATABASE=
 DB_PORT=
 
+
+APP_NAME="Orbit Eccomerce"
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="noreply@gmail.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+STRIPE_SECRET_KEY=
+STRIPE_PUBLISHABLE_KEY=
+
 <!-- server {
   listen        80;
   #listen        [::]:80;

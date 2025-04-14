@@ -85,9 +85,11 @@
                             <strong>Total</strong>
                             <strong id="cart-total">$<?php echo number_format(getCartTotalPrice(), 2) ?></strong>
                         </div>
+                        <?php if(getCartTotalItems() > 0) { ?>
                         <a href="/checkout">
                             <button class="btn btn-primary w-100">Proceed to Checkout</button>
                         </a>
+                        <?php } ?>
                     </div>
                 </div>
                 

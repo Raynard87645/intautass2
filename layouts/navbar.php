@@ -39,10 +39,11 @@ $search = "";
             <li class="nav-item">
               <a class="nav-link  <?php  echo $_SERVER['REQUEST_URI'] == '/dashboard' ?'active' :'' ?>" href="/dashboard">Dashboard</a>
             </li>
+            
+            <?php } ?>
             <li class="nav-item">
               <a class="nav-link  <?php  echo $_SERVER['REQUEST_URI'] == '/products' ?'active' :'' ?>" href="products">Products</a>
             </li>
-            <?php } ?>
             <li class="nav-item">
               <a class="nav-link  <?php  echo $_SERVER['REQUEST_URI'] == '/about-us' ?'active' :'' ?>" href="/about-us">About Us</a>
             </li>
@@ -75,6 +76,7 @@ $search = "";
                     />
                 </a>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="/customer-service">Customer Service</a></li>
                 <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li><a class="dropdown-item" href="/cart">Cart</a></li>
                 <li><a class="dropdown-item" href="/includes/logout.php">logout</a></li>

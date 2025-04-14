@@ -25,7 +25,8 @@ $viewroutes = [
     '/checkout' => 'checkout.php',
     '/payment-success' => 'paymentsuccess.php',
     '/login' => 'auth/login.php',
-    '/register' => 'auth/register.php'
+    '/register' => 'auth/register.php',
+    '/customer-service' => 'customer-service.php'
 ];
 
 

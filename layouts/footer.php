@@ -10,6 +10,8 @@
                 <span class="mx-1">&middot;</span>
                 <a class="small" href="faq">FAQ</a>
                 <span class="mx-1">&middot;</span>
+                <a class="small" href="/customer-service">Customer Service</a>
+                <span class="mx-1">&middot;</span>
                 <a class="small" href="/views/contact.php">Contact</a>
             </div>
         </div>

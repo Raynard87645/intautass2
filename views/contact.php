@@ -51,7 +51,7 @@
 
             sendMail($subject, $body , $content, $email, $name);
 
-            $success = "Your message has been sent successfully!";
+            // $success = "Your message has been sent successfully!";
         }
     }
 

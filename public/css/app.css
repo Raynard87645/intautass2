@@ -8,6 +8,13 @@ body {
 h2 {
   color: #333;
 }
+.nowrap {
+  white-space: nowrap;
+  display: inline-flex;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 90%;
+}
 .card {
   background-color: #ffffff;
   border-radius: 8px;
